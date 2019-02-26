@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -30,7 +31,9 @@ public boolean ischantierBusy = false;
    
    public void connexion()
    {
-		System.setProperty("webdriver.chrome.driver","C:\\Users\\Utilisateur\\eclipse-workspace\\ogamebot\\src\\ogamebot\\chromedriver.exe");
+	   System.out.println("Working Directory = " +
+	              System.getProperty("user.dir"));
+		System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir")+"\\src\\ogamebot\\chromedriver.exe");
 		driver = new ChromeDriver();
 		wait = new WebDriverWait(driver,10);
 		driver.get("https://fr.ogame.gameforge.com/");
@@ -90,6 +93,8 @@ public boolean ischantierBusy = false;
    public int goToAnotherPlanet() {
 	   driver.findElement(By.linkText("Vue d`ensemble")).click();
 	   List<WebElement> listPlanet = driver.findElements(By.className("smallplanet "));
+	   JavascriptExecutor jse = (JavascriptExecutor)driver;
+	   jse.executeScript("scroll(0, 250)"); // if the element is on bottom.
 	   for(int i=0;i<listPlanet.size();i++)
 	   {
 		   System.out.println(listPlanet.get(i).getText());
